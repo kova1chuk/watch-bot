@@ -15,22 +15,51 @@ const chatId = process.env.CHAT_ID;
 // Create a new instance of the TelegramBot
 const bot = new TelegramBot(token, { polling: true });
 
+// Listen for incoming text messages
+bot.on("message", (msg) => {
+  const chatId = msg.chat.id;
+  const message = msg.text;
+
+  // If the user sends the command /getChatId, the bot will reply with the chatId
+  if (message === "/getChatId") {
+    bot.sendMessage(chatId, `Your chatId is: ${chatId}`);
+  }
+
+  // Process other commands or messages here...
+});
+
+// Enable CORS for all routes
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // Handle preflight request
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 // Telegram webhook endpoint for receiving order information
+// Parse JSON data in the request body
 app.use(bodyParser.json());
 app.post("/order", (req, res) => {
   const { delivery, city, settlementsRegion, product, seller, price } =
     req.body;
 
   // Compose the message
-  const message = `
-    New Order:
-    Delivery: ${delivery}
-    City: ${city}
-    Settlements Region: ${settlementsRegion}
-    Product: ${product}
-    Seller: ${seller}
-    Price: ${price}
-  `;
+  let message = `🚀 New Order 🛍️\n\n`;
+  message += `Delivery Method: ${delivery}\n`;
+  message += `City: ${city}\n`;
+  message += `Settlements Region: ${settlementsRegion}\n`;
+  message += `Product: ${product}\n`;
+  message += `Seller: ${seller}\n`;
+  message += `Price: ${price}\n`;
 
   // Send the message to your chat
   bot.sendMessage(chatId, message);
@@ -39,7 +68,7 @@ app.post("/order", (req, res) => {
 });
 
 // Start the server on a port of your choice
-const port = 3000;
+const port = 3001;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
