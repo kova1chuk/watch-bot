@@ -65,23 +65,25 @@ app.post("/order", (req, res) => {
     name,
     phoneNumber,
     selectedShippingTab,
+    shipping,
     ukr,
     nova,
   } = req.body;
 
   // Compose the message
   let message = `🚀 New Order 🛍️\n\n`;
-  message += `Delivery Method: ${delivery}\n`;
-  message += `City: ${city}\n`;
-  message += `Settlements Region: ${settlementsRegion}\n`;
+  // message += `Delivery Method: ${delivery}\n`;
+  // message += `City: ${city}\n`;
+  // message += `Settlements Region: ${settlementsRegion}\n`;
   message += `${product}\n`; // Use product directly since it's already a part of req.body
   message += `${name}\n`; // Use name directly since it's already a part of req.body
-  message += `${phoneNumber}\n`; // Use phoneNumber directly since it's already a part of req.body
-  message += `${
-    selectedShippingTab === "nova"
-      ? `Нова Пошта - ${nova}`
-      : `Укрпошта - ${ukr}`
-  }\n`;
+  message += `Номер телефону: ${phoneNumber}\n`; // Use phoneNumber directly since it's already a part of req.body
+  // message += `${
+  //   selectedShippingTab === "nova"
+  //     ? `Нова Пошта - ${nova}`
+  //     : `Укрпошта - ${ukr}`
+  // }\n`;
+  message += `Доставка: ${shipping}\n`;
   message += `Price: ${price}\n`;
 
   // Send the message to your chat
