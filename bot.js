@@ -55,16 +55,33 @@ app.use((req, res, next) => {
 // Parse JSON data in the request body
 app.use(bodyParser.json());
 app.post("/order", (req, res) => {
-  const { delivery, city, settlementsRegion, product, seller, price } =
-    req.body;
+  const {
+    delivery,
+    city,
+    settlementsRegion,
+    product,
+    seller,
+    price,
+    name,
+    phoneNumber,
+    selectedShippingTab,
+    ukr,
+    nova,
+  } = req.body;
 
   // Compose the message
   let message = `🚀 New Order 🛍️\n\n`;
   message += `Delivery Method: ${delivery}\n`;
   message += `City: ${city}\n`;
   message += `Settlements Region: ${settlementsRegion}\n`;
-  message += `Product: ${product}\n`;
-  message += `Seller: ${seller}\n`;
+  message += `${product}\n`; // Use product directly since it's already a part of req.body
+  message += `${name}\n`; // Use name directly since it's already a part of req.body
+  message += `${phoneNumber}\n`; // Use phoneNumber directly since it's already a part of req.body
+  message += `${
+    selectedShippingTab === "nova"
+      ? `Нова Пошта - ${nova}`
+      : `Укрпошта - ${ukr}`
+  }\n`;
   message += `Price: ${price}\n`;
 
   // Send the message to your chat
