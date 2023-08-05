@@ -63,7 +63,7 @@ app.post("/order", (req, res) => {
     seller,
     price,
     name,
-    phoneNumber,
+    phone,
     selectedShippingTab,
     shipping,
     ukr,
@@ -77,7 +77,7 @@ app.post("/order", (req, res) => {
   // message += `Settlements Region: ${settlementsRegion}\n`;
   message += `${product}\n`; // Use product directly since it's already a part of req.body
   message += `${name}\n`; // Use name directly since it's already a part of req.body
-  message += `Номер телефону: ${phoneNumber}\n`; // Use phoneNumber directly since it's already a part of req.body
+  message += `Номер телефону: ${phone}\n`; // Use phoneNumber directly since it's already a part of req.body
   // message += `${
   //   selectedShippingTab === "nova"
   //     ? `Нова Пошта - ${nova}`
