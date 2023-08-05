@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
+const port = process.env.PORT || 3001;
 
 // Get the Telegram API Token and chatId from the environment variables
 const token = process.env.TELEGRAM_API_TOKEN;
@@ -30,7 +31,12 @@ bot.on("message", (msg) => {
 
 // Enable CORS for all routes
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000", "*");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    // "http://localhost:3000",
+    // "http://localhost:8080",
+    "*"
+  );
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -67,8 +73,6 @@ app.post("/order", (req, res) => {
   res.status(200).json({ success: true });
 });
 
-// Start the server on a port of your choice
-const port = 3001;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
