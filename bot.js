@@ -59,7 +59,7 @@ app.post("/order", (req, res) => {
     delivery,
     city,
     settlementsRegion,
-    product,
+    productSKU,
     seller,
     price,
     name,
@@ -75,7 +75,7 @@ app.post("/order", (req, res) => {
   // message += `Delivery Method: ${delivery}\n`;
   // message += `City: ${city}\n`;
   // message += `Settlements Region: ${settlementsRegion}\n`;
-  message += `${product}\n`; // Use product directly since it's already a part of req.body
+  message += `${productSKU}\n`; // Use product directly since it's already a part of req.body
   message += `${name}\n`; // Use name directly since it's already a part of req.body
   message += `Номер телефону: ${phone}\n`; // Use phoneNumber directly since it's already a part of req.body
   // message += `${
@@ -88,6 +88,11 @@ app.post("/order", (req, res) => {
 
   // Send the message to your chat
   bot.sendMessage(chatId, message);
+
+  res.status(200).json({ success: true });
+});
+app.post("/visit", (req, res) => {
+  bot.sendMessage(chatId, "New visitor");
 
   res.status(200).json({ success: true });
 });
